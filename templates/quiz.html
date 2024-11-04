@@ -7,18 +7,33 @@
 </head>
 <body>
     <h1>English Quiz</h1>
+
     {% if submitted %}
-        <p>Your Score: {{ score }}/{{ questions | length }}</p>
+        <p>Your Score: {{ score }} out of {{ questions|length }}</p>
+        <ul>
+            {% for question in questions %}
+                <li>
+                    <strong>{{ question.question }}</strong><br>
+                    Your answer:
+                    <span style="color:
+                    {{ 'green' if user_answers[question.id] == question.answer.lower() else 'red' }}">
+                        {{ user_answers[question.id] or 'No answer' }}
+                    </span><br>
+                    Correct answer: {{ question.answer }}
+                </li>
+            {% endfor %}
+        </ul>
         <a href="{{ url_for('quiz') }}">Try Again</a>
     {% else %}
         <form method="POST">
-            {% for i, q in enumerate(questions) %}
-                <p>{{ q.question }}</p>
-                <input type="text" name="q{{ i }}">
+            {% for question in questions %}
+                <p>{{ question.question }}</p>
+                <input type="text" name="q{{ question.id }}" placeholder="Your answer here">
             {% endfor %}
             <button type="submit">Submit Answers</button>
         </form>
     {% endif %}
+
     <a href="{{ url_for('home') }}">Back to Home</a>
 </body>
 </html>

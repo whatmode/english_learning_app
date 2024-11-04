@@ -10,9 +10,10 @@
     <p>Choose a lesson to start learning!</p>
     <ul>
         {% for topic, description in lessons.items() %}
-            <li><a href="{{ url_for('lesson', topic=topic) }}">{{ topic.capitalize() }}: {{ description }}</a></li>
+            <li><a href="{{ url_for('lesson', topic=topic) }}">
+                View {{ topic|capitalize }} Lesson</a></li>
         {% endfor %}
     </ul>
-    <a href="#">Take a Quiz!</a>
+    <a href="{{ url_for('quiz') }}">Take a Quiz!</a>
 </body>
 </html>
