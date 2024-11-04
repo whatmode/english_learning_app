@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>English Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>English Quiz</h1>
+    {% if submitted %}
+        <p>Your Score: {{ score }}/{{ questions | length }}</p>
+        <a href="{{ url_for('quiz') }}">Try Again</a>
+    {% else %}
+        <form method="POST">
+            {% for i, q in enumerate(questions) %}
+                <p>{{ q.question }}</p>
+                <input type="text" name="q{{ i }}">
+            {% endfor %}
+            <button type="submit">Submit Answers</button>
+        </form>
+    {% endif %}
+    <a href="{{ url_for('home') }}">Back to Home</a>
+</body>
+</html>
