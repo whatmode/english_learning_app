@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ topic }} Lesson</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>{{ topic }} Lesson</h1>
-    <p>{{ content }}</p>
+    <h1>{{ title }}</h1>
+    <div>
+        {{ content | safe }}
+    </div>
     <a href="{{ url_for('home') }}">Back to Home</a>
 </body>
 </html>

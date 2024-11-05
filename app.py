@@ -2,11 +2,48 @@ from flask import Flask, render_template, request
 
 english_learning_app = Flask(__name__)
 
+# Expanded lessons content
 lessons = {
-    "grammar": "Grammar Basics: Subject-Verb Agreement, Tenses, etc.",
-    "vocabulary": "Vocabulary Basics: Common Words, Synonyms, Antonyms, etc."
-}
+    "grammar": {
+        "title": "Grammar Basics",
+        "description": "Understanding the foundational rules of English grammar.",
+        "content": """
+        <h3>1. Subject-Verb Agreement</h3>
+        <p>The subject and verb in a sentence must agree in number (singular or plural).</p>
+        <ul>
+            <li><strong>Correct:</strong> She <em>runs</em> every morning.</li>
+            <li><strong>Incorrect:</strong> She <em>run</em> every morning.</li>
+        </ul>
 
+        <h3>2. Tenses</h3>
+        <p>Tenses indicate the timing of actions (past, present, future).</p>
+        <ul>
+            <li>Present Simple: I <em>walk</em>.</li>
+            <li>Past Simple: I <em>walked</em>.</li>
+            <li>Future Simple: I <em>will walk</em>.</li>
+        </ul>
+        """
+    },
+    "vocabulary": {
+        "title": "Vocabulary Basics",
+        "description": "Learning common words, synonyms, and antonyms.",
+        "content": """
+        <h3>1. Synonyms and Antonyms</h3>
+        <p>Synonyms are words with similar meanings, while antonyms are words with opposite meanings.</p>
+        <ul>
+            <li>Synonym of <em>happy</em>: joyful, content</li>
+            <li>Antonym of <em>happy</em>: sad, unhappy</li>
+        </ul>
+
+        <h3>2. Commonly Confused Words</h3>
+        <p>Words that sound similar but have different meanings.</p>
+        <ul>
+            <li><strong>Accept</strong> vs. <strong>Except</strong></li>
+            <li><strong>Effect</strong> vs. <strong>Affect</strong></li>
+        </ul>
+        """
+    }
+}
 
 # Sample quiz questions
 quiz_questions = [
@@ -15,7 +52,6 @@ quiz_questions = [
     {"id": 2, "question": "Fill in the blank: She ___ to the store yesterday.", "answer": "went"}
 ]
 
-
 @english_learning_app.route('/')
 def home():
     return render_template('index.html', lessons=lessons)
@@ -23,11 +59,11 @@ def home():
 @english_learning_app.route('/lesson/<topic>')
 def lesson(topic):
     # Retrieve lesson content based on the topic
-    content = lessons.get(topic, "Lesson not found.")
-    return render_template('lesson.html',
-                           topic=topic.capitalize(),
-                           content=content)
-
+    lesson_content = lessons.get(topic)
+    if lesson_content:
+        return render_template('lesson.html', title=lesson_content["title"], content=lesson_content["content"])
+    else:
+        return "Lesson not found.", 404
 
 @english_learning_app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
