@@ -1,0 +1,38 @@
+name: BE Python tests
+
+on:
+  # Run the tests on pushes to the master branch and pull requests
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Sets the root directory as PYTHONPATH
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        PYTHONPATH=. pytest tests/test_app.py
+        python -m venv .venv
+        source .venv/bin/activate
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        source .venv/bin/activate
+        pytest
