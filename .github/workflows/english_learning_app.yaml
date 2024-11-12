@@ -15,8 +15,9 @@ jobs:
     # Sets the root directory as PYTHONPATH
     env:
       PYTHONPATH: ${{ github.workspace }}
+      
 
-  steps:
+    steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
