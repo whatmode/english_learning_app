@@ -1,11 +1,12 @@
+---
 name: BE Python tests
 
-on:
+"on":
   # Run the tests on pushes to the master branch and pull requests
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   test:
