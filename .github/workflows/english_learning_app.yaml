@@ -38,6 +38,7 @@ jobs:
     steps:
       - name: Check codestyle
         run: |
+          pwd
           source .venv/bin/activate
           flake8 app.py
 
@@ -47,5 +48,6 @@ jobs:
       steps:
         - name: Run tests
           run: |
+            pwd
             source .venv/bin/activate
             pytest
