@@ -37,6 +37,7 @@ jobs:
       run: |
         source .venv/bin/activate
         pwd
+        ls
         flake8 main.py
     
     - name: Run tests
