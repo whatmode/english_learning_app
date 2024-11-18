@@ -33,6 +33,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Check codestyle
+      run: |
+        flake8 main.py
+    
     - name: Run tests
       run: |
         source .venv/bin/activate
