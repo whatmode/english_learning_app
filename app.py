@@ -34,8 +34,7 @@ lessons = {
     },
     "vocabulary": {
         "title": "Vocabulary Basics",
-        "description": "Learning common words, 
-        synonyms, and antonyms.",
+        "description": "Words, synonyms, and antonyms.",
         "content": """
         <h3>1. Synonyms and Antonyms</h3>
         <p>Synonyms are words with similar meanings, 
