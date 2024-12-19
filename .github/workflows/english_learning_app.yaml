@@ -38,6 +38,7 @@ jobs:
     steps:
       - name: Check codestyle
         run: |
+          set -x
           pwd
           ls
           source .venv/bin/activate
@@ -49,6 +50,7 @@ jobs:
       steps:
         - name: Run tests
           run: |
+            set -x
             pwd
             ls
             source .venv/bin/activate
