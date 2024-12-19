@@ -6,8 +6,7 @@ english_learning_app = Flask(__name__)
 lessons = {
     "grammar": {
         "title": "Grammar Basics",
-        "description": "Understanding the foundational 
-        rules of English grammar.",
+        "description": "Rules of English grammar.",
         "content": """
         <h3>1. Subject-Verb Agreement</h3>
         <p>The subject and verb in a sentence 
