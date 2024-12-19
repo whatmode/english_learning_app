@@ -35,7 +35,7 @@ lessons = {
         "description": "Words, synonyms, and antonyms.",
         "content": """
         <h3>1. Synonyms and Antonyms</h3>
-        <p>Synonyms are words with similar meanings.</p> 
+        <p>Synonyms are words with similar meanings.</p>
         <p>While antonyms are words with opposite meanings.</p>
         <ul>
             <li>Synonym of <em>happy</em>: joyful, content</li>
@@ -55,7 +55,7 @@ lessons = {
 # Sample quiz questions
 quiz_questions = [
     {
-        "id": 0, 
+        "id": 0,
         "question": "What is the plural form of 'child'?",
         "answer": "children"},
     {
@@ -95,8 +95,8 @@ def quiz():
 
         # Collect user answers and calculate the score
         for question in quiz_questions:
-            request = request.form.get(f"q{question['id']}", "")
-            user_answer = request.strip().lower()
+            user_request = request.form.get(f"q{question['id']}", "")
+            user_answer = user_request.strip().lower()
             correct_answer = question["answer"].lower()
             user_answers[question['id']] = user_answer
 
