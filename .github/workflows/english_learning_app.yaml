@@ -25,7 +25,6 @@ jobs:
 
       - name: Cache Python dependencies
         uses: actions/cache@v3
-        id: cache-python-deps
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
@@ -43,8 +42,7 @@ jobs:
       - name: Save .venv for later jobs
         run: |
           tar -czf venv.tar.gz .venv
-        if: ${{ always() }}
-        # Upload the tarball as an artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: venv
