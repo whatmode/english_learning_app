@@ -9,21 +9,21 @@ lessons = {
         "description": "Rules of English grammar.",
         "content": """
         <h3>1. Subject-Verb Agreement</h3>
-        <p>The subject and verb in a sentence
+        <p>The subject and verb in a sentence 
         must agree in number (singular or plural).</p>
         <ul>
             <li>
-            <strong>Correct:</strong>
+            <strong>Correct:</strong> 
             She <em>runs</em> every morning.
             </li>
             <li>
-            <strong>Incorrect:</strong>
+            <strong>Incorrect:</strong> 
             She <em>run</em> every morning.
             </li>
         </ul>
 
         <h3>2. Tenses</h3>
-        <p>Tenses indicate the timing
+        <p>Tenses indicate the timing 
         of actions (past, present, future).</p>
         <ul>
             <li>Present Simple: I <em>walk</em>.</li>
@@ -37,7 +37,7 @@ lessons = {
         "description": "Words, synonyms, and antonyms.",
         "content": """
         <h3>1. Synonyms and Antonyms</h3>
-        <p>Synonyms are words with similar meanings,
+        <p>Synonyms are words with similar meanings, 
         while antonyms are words with opposite meanings.</p>
         <ul>
             <li>Synonym of <em>happy</em>: joyful, content</li>
@@ -56,31 +56,34 @@ lessons = {
 
 # Sample quiz questions
 quiz_questions = [
-    {"id": 0,
-     "question": "What is the plural form of 'child'?",
-     "answer": "children"},
-    {"id": 1,
-     "question": "What is the opposite of 'hot'?",
-     "answer": "cold"},
-    {"id": 2,
-     "question": "Fill in the blank: She ___ to the store yesterday.",
-     "answer": "went"}
+    {"id": 0, 
+    "question": "What is the plural form of 'child'?", 
+    "answer": "children"},
+    {"id": 1, 
+    "question": "What is the opposite of 'hot'?", 
+    "answer": "cold"},
+    {"id": 2, 
+    "question": "Fill in the blank: She ___ to the store yesterday.", 
+    "answer": "went"}
 ]
+
 
 @english_learning_app.route('/')
 def home():
     return render_template('index.html', lessons=lessons)
+
 
 @english_learning_app.route('/lesson/<topic>')
 def lesson(topic):
     # Retrieve lesson content based on the topic
     lesson_content = lessons.get(topic)
     if lesson_content:
-        return render_template('lesson.html',
-                               title=lesson_content["title"],
+        return render_template('lesson.html', 
+                               title=lesson_content["title"], 
                                content=lesson_content["content"])
     else:
         return "Lesson not found.", 404
+
 
 @english_learning_app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
@@ -91,8 +94,7 @@ def quiz():
 
         # Collect user answers and calculate the score
         for question in quiz_questions:
-            user_answer = request.form.get(
-              f"q{question['id']}", "").strip().lower()
+            user_answer = request.form.get(f"q{question['id']}", "").strip().lower()
             correct_answer = question["answer"].lower()
             user_answers[question['id']] = user_answer
 
@@ -111,6 +113,7 @@ def quiz():
     return render_template('quiz.html',
                            questions=quiz_questions,
                            submitted=False)
+
 
 if __name__ == '__main__':
     english_learning_app.run()
