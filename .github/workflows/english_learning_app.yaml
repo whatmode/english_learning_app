@@ -1,7 +1,6 @@
----
 name: BE Python tests
 
-"on":
+on:
   # Run the tests on pushes to the master branch and pull requests
   push:
     branches: ["master"]
@@ -9,49 +8,90 @@ name: BE Python tests
     branches: ["master"]
 
 jobs:
-  preparation:  
+  preparation:
     runs-on: ubuntu-latest
-     
     env:
-     # Sets the root directory as PYTHONPATH
+      # Sets the root directory as PYTHONPATH
       PYTHONPATH: ${{ github.workspace }}
       
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-    - name: Install dependencies
-      run: |
-        python -m venv .venv
-        source .venv/bin/activate
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        id: cache-python-deps
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.cache-python-deps.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
         
+      - name: Save .venv for later jobs
+        run: |
+          tar -czf venv.tar.gz .venv
+        if: ${{ always() }}
+        # Upload the tarball as an artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: venv
+          path: venv.tar.gz
+
   codestyle:
     needs: preparation
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download .venv from preparation job
+        uses: actions/download-artifact@v3
+        with:
+          name: venv
+
+      - name: Extract .venv
+        run: |
+          tar -xzf venv.tar.gz
+          ls -la .venv
+
       - name: Check codestyle
         run: |
           set -x
-          pwd
-          ls
           source .venv/bin/activate
           flake8 app.py
 
   testing:
-      needs: preparation
-      runs-on: ubuntu-latest
-      steps:
-        - name: Run tests
-          run: |
-            set -x
-            pwd
-            ls
-            source .venv/bin/activate
-            pytest
+    needs: preparation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download .venv from preparation job
+        uses: actions/download-artifact@v3
+        with:
+          name: venv
+
+      - name: Extract .venv
+        run: |
+          tar -xzf venv.tar.gz
+          ls -la .venv
+
+      - name: Run tests
+        run: |
+          set -x
+          source .venv/bin/activate
+          pytest
