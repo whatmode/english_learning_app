@@ -72,6 +72,9 @@ jobs:
           flake8 app.py
 
   testing:
+    env:
+      # Sets the root directory as PYTHONPATH
+      PYTHONPATH: ${{ github.workspace }}
     needs: preparation
     runs-on: ubuntu-latest
     steps:
