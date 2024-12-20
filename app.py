@@ -8,8 +8,7 @@ lessons = {
         "title": "Grammar Basics",
         "description": "Rules of English grammar.",
         "content": """
-        <h3>1. Subject-Verb Agreement</h3>
-        <p>The subject and verb in a sentence must agree in number.</p>
+        <h3>1. Subject-Verb Agreement</h3><p>The subject and verb in a sentence must agree in number.</p>
         <ul>
             <li>
             <strong>Correct:</strong>
